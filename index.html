@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soundboard</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  
+<div class="wrapper">
+
+  <header class="header">
+    <div class="control-panel">
+      <div class="dropdown">
+        <button id="dropdown-trigger">Settings ▾</button>
+        <div id="dropdown-menu" class="dropdown-content">
+          <button id="themeToggleBtn" class="menu-item">Theme: light</button>
+          <button id="toggleCoversBtn" class="menu-item">Show Covers: on</button>
+          <button id="resetPlayerBtn" class="menu-item">Reset library</button>
+        </div>
+      </div>
+      <input type="text" id="song-search" placeholder="Search track...">
+    </div>
+  </header>
+
+  <main class="main">
+    
+    <section class="player-container">
+      <audio id="audio-engine"></audio>
+
+      <div class="track-info-block">
+        <div class="cover-wrapper">
+          <img id="track-cover" src="assets/default-cover.png" alt="Album Cover">
+        </div>
+        <h2 id="track-title">Song Title</h2>
+        <p id="track-artist">Artist Name</p>
+      </div>
+
+      <div class="progress-container">
+        <span id="time-current">00:00</span>
+        <input type="range" id="progress-bar" min="0" max="100" value="0">
+        <span id="time-total">00:00</span>
+      </div>
+
+      <div class="controls-panel">
+        <button id="btn-shuffle" class="btn-control" title="Shuffle">🔀</button>
+        <button id="btn-prev" class="btn-control" title="Previous">⏮</button>
+        <button id="btn-play-pause" class="btn-control main-play" title="Play/Pause">⏯</button>
+        <button id="btn-next" class="btn-control" title="Next">⏭</button>
+        <button id="btn-loop" class="btn-control" title="Repeat">🔁</button>
+      </div>
+
+      <div class="volume-container">
+        <button id="btn-mute" class="btn-control">🔊</button>
+        <input type="range" id="volume-bar" min="0" max="100" value="50">
+      </div>
+    </section>
+  
+    <section class="playlist-container">
+      <h3>Music Library</h3>
+      <div id="playlist-tracks" class="tracks-list">
+        
+      </div>
+    </section>
+
+  </main>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
