@@ -79,4 +79,31 @@ document.addEventListener("DOMContentLoaded", () => {
       localStorage.setItem("soundboard-theme", "light");
     }
   });
+
+
+  function loadSong(index) {
+    const song = songs[index];
+    if (!song) return;
+
+    audioEngine.src = song.src;
+
+    trackTitle.textContent = song.title;
+    trackArtist.textContent = song.artist;
+
+    trackCover.src = song.cover;
+
+    timeCurrent.textContent = "00:00";
+    timeTotal.textContent = song.duration;
+    progressBar.value = 0;
+
+    document.querySelectorAll(".playlist-item").forEach(item => {
+      item.classList.remove("active");
+    })
+
+    const activePlaylistItem = document.querySelector(`.playlist-item[data-id="${song.id}"]`);
+    activePlaylistItem.classList.add("active");
+  }
+
+  loadSong(currentSongIndex);
+
 });
