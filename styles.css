@@ -118,6 +118,10 @@ body {
   background-color: var(--bg-secondary);
 }
 
+#resetPlayerBtn:hover {
+  color: var(--color-high);
+}
+
 #song-search {
   flex-grow: 1;
   padding: 8px 12px;
@@ -273,6 +277,68 @@ input[type="range"]::-moz-range-thumb:hover {
   justify-content: center;
   max-width: 250px;
   margin-top: 8px;
+}
+
+.playlist-container h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--bg-secondary);
+}
+
+.tracks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 450px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.playlist-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: var(--border-radius);
+  transition: background-color 0.15s ease;
+}
+
+.playlist-item:hover {
+  background-color: var(--bg-primary);
+}
+
+.playlist-item.active {
+  background-color: var(--bg-secondary);
+  border-left: 4px solid var(--color-brand);
+}
+
+.pl-cover {
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.pl-info {
+  flex-grow: 1;
+}
+
+.pl-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.pl-artist {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.pl-duration {
+  font-size: 0.85rem;
+  color: var(--text-muted);
 }
 
 button {
