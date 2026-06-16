@@ -30,15 +30,15 @@ document.addEventListener("DOMContentLoaded", () => {
       id: "1",
       title: "Lost in the City",
       artist: "Neon Drive",
-      src: "assets/music.lost-in-the-city.mp3",
-      cover: "asseets/covers/neon-drive.png",
+      src: "assets/music/lost-in-the-city.mp3",
+      cover: "assets/covers/neon-drive.png",
       duration: "03:45",
     },
     {
       id: "3",
       title: "Retro Wave",
       artist: "Cyber Heart",
-      src: "assets/music.retro-wave.mp3",
+      src: "assets/music/retro-wave.mp3",
       cover: "assets/covers/cyber-heart.png",
       duration: "02:58"
     }
@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let searchQuery = "";
 
   const savedTheme = localStorage.getItem("soundboard-theme");
-  const prefersDark = window.matchMedia('prefers-color-scheme: dark').matches;
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
   if (savedTheme == 'dark' || (!savedTheme && prefersDark)) {
     htmlElement.classList.add("dark-theme");
@@ -104,6 +104,39 @@ document.addEventListener("DOMContentLoaded", () => {
     activePlaylistItem.classList.add("active");
   }
 
-  loadSong(currentSongIndex);
+  function renderPlaylist() {
+    playlistTracks.innerHTML = "";
 
+    const filteredSongs = songs.filter(song => {
+      const title = song.title.toLowerCase();
+      const artist = song.artist.toLowerCase();
+      return title.includes(searchQuery) || artist.includes(searchQuery);
+    });
+
+    filteredSongs.forEach((song) => {
+      const originalIndex = songs.findIndex(s => s.id === song.id);
+
+      const trackHTML = `
+        <div class="playlist-item" data-id="${song.id}" data-index="${originalIndex}">
+          ${showCovers ? `<img class="pl-cover" src="${song.cover}" alt="${song.title}">` : ""}
+          <div class="pl-info">
+            <div class="pl-title">${song.title}</div>
+            <div class="pl-artist">${song.artist}</div>
+          </div>
+          <div class="pl-duration">${song.duration}</div>
+        </div>
+      `;
+
+      playlistTracks.insertAdjacentHTML("beforeend", trackHTML);
+    });
+
+    const currentSong = songs[currentSongIndex];
+    if (currentSong) {
+      const activeItem = document.querySelector(`.playlist-item[data-id="${currentSong.id}"]`);
+      if (activeItem) activeItem.classList.add("active");
+    }
+  }
+
+  renderPlaylist();
+  loadSong(currentSongIndex);
 });
