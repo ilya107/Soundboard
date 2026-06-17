@@ -41,6 +41,14 @@ document.addEventListener("DOMContentLoaded", () => {
       src: "assets/music/song2.mp3",
       cover: "assets/covers/cover2.jpg",
       duration: "02:34"
+    },
+    {
+      id: 7,
+      title: "Classic Piano",
+      artist: "The_Mountain",
+      src: "assets/music/song3.mp3",
+      cover: "assets/covers/cover3.png",
+      duration: "01:39"
     }
   ];
 
@@ -100,6 +108,33 @@ document.addEventListener("DOMContentLoaded", () => {
     isPlaying = false;
     togglePlay();
   });
+
+  btnNext.addEventListener("click", nextSong);
+  btnPrev.addEventListener("click", prevSong);
+
+  function nextSong() {
+    currentSongIndex ++;
+
+    if (currentSongIndex >= songs.length) {
+      currentSongIndex = 0;
+    }
+
+    loadSong(currentSongIndex);
+    isPlaying = false;
+    togglePlay();
+  }
+
+  function prevSong() {
+    currentSongIndex --;
+
+    if (currentSongIndex < 0) {
+      currentSongIndex = songs.length - 1;
+    }
+
+    loadSong(currentSongIndex);
+    isPlaying = false;
+    togglePlay();
+  }
 
 
   function loadSong(index) {
