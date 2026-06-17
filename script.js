@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const dropdownMenu = document.getElementById("dropdown-menu");
   const themeToggleBtn = document.getElementById("themeToggleBtn");
   const toggleCoverBtn = document.getElementById("toggleCoversBtn");
+  const resetPlayerBtn = document.getElementById("resetPlayerBtn");
   const songSearch = document.getElementById("song-search");
   const playlistTracks = document.getElementById("playlist-tracks");
 
@@ -122,6 +123,29 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     renderPlaylist();
+  });
+
+  resetPlayerBtn.addEventListener("click", () => {
+    audioEngine.pause();
+    audioEngine.currentTime = 0;
+    isPlaying = false;
+    btnPlayPause.textContent = "⏯";
+
+    isLoop = false;
+    isShuffle = false;
+    audioEngine.loop = false;
+    btnLoop.classList.remove("active");
+    btnShuffle.classList.remove("active");
+
+    searchQuery = "";
+    songSearch.value = "";
+
+    currentSongIndex = 0;
+
+    renderPlaylist();
+    loadSong(currentSongIndex);
+
+    dropdownMenu.classList.remove('show');
   });
 
   songSearch.addEventListener("input", () => {
