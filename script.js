@@ -112,6 +112,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  toggleCoverBtn.addEventListener("click", () => {
+    showCovers = !showCovers;
+
+    if (showCovers) {
+      toggleCoverBtn.textContent = "Show Covers: on";
+    } else {
+      toggleCoverBtn.textContent = "Show Covers: off";
+    }
+
+    renderPlaylist();
+  });
+
   songSearch.addEventListener("input", () => {
     searchQuery = songSearch.value.trim().toLowerCase();
     renderPlaylist();
