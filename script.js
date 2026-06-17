@@ -104,6 +104,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
   btnPlayPause.addEventListener("click", togglePlay);
 
+  btnLoop.addEventListener("click", () => {
+    isLoop = !isLoop;
+
+    audioEngine.loop = isLoop;
+
+    if (isLoop) {
+      btnLoop.classList.add("active");
+    } else {
+      btnLoop.classList.remove("active");
+    }
+  })
+
   playlistTracks.addEventListener("click", event => {
     const item = event.target.closest(".playlist-item");
     if (!item) return;
@@ -171,7 +183,6 @@ document.addEventListener("DOMContentLoaded", () => {
         btnMute.textContent = "🔊";
       }
     }
-
   });
 
   audioEngine.addEventListener("ended", nextSong);
