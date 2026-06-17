@@ -216,7 +216,8 @@ input[type="range"] {
   appearance: none;
 }
 
-input[type="range"]::-webkit-slider-thumb {
+input[type="range"]::-webkit-slider-thumb,
+input[type="range"]::-moz-range-thumb {
   -webkit-appearance: none;
   appearance: none;
   width: 14px;
@@ -225,7 +226,8 @@ input[type="range"]::-webkit-slider-thumb {
   transition: transform 0.1s ease;
 }
 
-input[type="range"]::-webkit-slider-thumb:hover {
+input[type="range"]::-webkit-slider-thumb:hover,
+input[type="range"]::-moz-range-thumb:hover {
   transform: scale(1.2);
 }
 
@@ -236,10 +238,6 @@ input[type="range"]::-moz-range-thumb {
   border-radius: 50%;
   background-color: var(--color-brand);
   transition: transform 0.1s ease;
-}
-
-input[type="range"]::-moz-range-thumb:hover {
-  transform: scale(1.2);
 }
 
 .controls-panel {
@@ -255,7 +253,7 @@ input[type="range"]::-moz-range-thumb:hover {
   border: none;
   font-size: 1.2rem;
   padding: 8px;
-  transition: transform 0.1s ese, color 0.1s ease;
+  transition: transform 0.1s ease, color 0.1s ease;
 }
 
 .btn-control:hover {
@@ -307,6 +305,7 @@ input[type="range"]::-moz-range-thumb:hover {
 
 .playlist-item:hover {
   background-color: var(--bg-primary);
+  cursor: pointer;
 }
 
 .playlist-item.active {

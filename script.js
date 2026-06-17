@@ -43,12 +43,20 @@ document.addEventListener("DOMContentLoaded", () => {
       duration: "02:34"
     },
     {
-      id: 7,
+      id: "7",
       title: "Classic Piano",
       artist: "The_Mountain",
       src: "assets/music/song3.mp3",
       cover: "assets/covers/cover3.png",
       duration: "01:39"
+    },
+    {
+      id: "8",
+      title: "Classical - Classical Piano",
+      artist: "HitsLab",
+      src: "assets/music/song4.mp3",
+      cover: "assets/covers/cover4.jpg",
+      duration: "02:20"
     }
   ];
 
@@ -112,6 +120,28 @@ document.addEventListener("DOMContentLoaded", () => {
   btnNext.addEventListener("click", nextSong);
   btnPrev.addEventListener("click", prevSong);
 
+  audioEngine.addEventListener("timeupdate", () => {
+    const current = audioEngine.currentTime;
+    const duration = audioEngine.duration;
+
+    timeCurrent.textContent = formatTime(current);
+
+    if (duration) {
+      progressBar.value = (current / duration) * 100;
+    }
+  });
+
+  progressBar.addEventListener("input", () => {
+    const duration = audioEngine.duration;
+    if (!duration) return;
+
+    const newTime = (progressBar.value / 100) * duration;
+
+    audioEngine.currentTime = newTime;
+  })
+
+  audioEngine.addEventListener("ended", nextSong);
+
   function nextSong() {
     currentSongIndex ++;
 
@@ -157,8 +187,7 @@ document.addEventListener("DOMContentLoaded", () => {
     })
 
     const activePlaylistItem = document.querySelector(`.playlist-item[data-id="${song.id}"]`);
-    if (activePlaylistItem);
-    activePlaylistItem.classList.add("active");
+    if (activePlaylistItem) activePlaylistItem.classList.add("active");
   }
 
   function renderPlaylist() {
@@ -204,6 +233,15 @@ document.addEventListener("DOMContentLoaded", () => {
       btnPlayPause.textContent = "⏸";
       isPlaying = true;
     }
+  }
+
+  function formatTime(seconds) {
+    if (isNaN(seconds)) return "00:00";
+
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   }
 
   renderPlaylist();
