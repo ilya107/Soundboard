@@ -66,6 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let isLoop = false;
   let showCovers = true;
   let searchQuery = "";
+  let lastVolume = 0.5;
 
   const savedTheme = localStorage.getItem("soundboard-theme");
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -139,6 +140,39 @@ document.addEventListener("DOMContentLoaded", () => {
 
     audioEngine.currentTime = newTime;
   })
+
+  volumeBar.addEventListener("input", () => {
+    const currentVolume = volumeBar.value / 100;
+    audioEngine.volume = currentVolume;
+
+    if (currentVolume === 0) {
+      btnMute.textContent = "🔇";
+    } else if (currentVolume < 0.4){
+      btnMute.textContent = "🔉";
+    } else {
+      btnMute.textContent = "🔊";
+    }
+  });
+
+  btnMute.addEventListener("click", () => {
+    if (audioEngine.volume > 0) {
+      lastVolume = audioEngine.volume;
+
+      audioEngine.volume = 0;
+      volumeBar.value = 0;
+      btnMute.textContent = "🔇";
+    } else {
+      audioEngine.volume = lastVolume;
+      volumeBar.value = lastVolume * 100;
+
+      if (lastVolume < 0.4) {
+        btnMute.textContent = "🔉";
+      } else {
+        btnMute.textContent = "🔊";
+      }
+    }
+
+  });
 
   audioEngine.addEventListener("ended", nextSong);
 
@@ -244,6 +278,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   }
 
+  audioEngine.volume = volumeBar.value / 100;
   renderPlaylist();
   loadSong(currentSongIndex);
 });
