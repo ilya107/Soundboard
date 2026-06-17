@@ -133,6 +133,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     isLoop = false;
     isShuffle = false;
+    showCovers = true;
     audioEngine.loop = false;
     btnLoop.classList.remove("active");
     btnShuffle.classList.remove("active");
@@ -141,6 +142,10 @@ document.addEventListener("DOMContentLoaded", () => {
     songSearch.value = "";
 
     currentSongIndex = 0;
+
+    volumeBar.value = 50;
+    btnMute.textContent = "🔊";
+    audioEngine.volume = volumeBar.value / 100;
 
     renderPlaylist();
     loadSong(currentSongIndex);
