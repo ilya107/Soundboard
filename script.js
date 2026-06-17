@@ -57,6 +57,21 @@ document.addEventListener("DOMContentLoaded", () => {
       src: "assets/music/song4.mp3",
       cover: "assets/covers/cover4.jpg",
       duration: "02:20"
+    },
+    {
+      id: "10",
+      title: "Classic",
+      artist: "MVNoCopyrightMusic",
+      src: "assets/music/song5.mp3",
+      cover: "assets/covers/cover5.jpg",
+      duration: "02:33"
+    },
+    { id: "11",
+      title: "Classic",
+      artist: "The_Mountain",
+      src: "assets/music/song6.mp3",
+      cover: "assets/covers/cover6.jpg",
+      duration: "01:50"
     }
   ];
 
@@ -114,7 +129,17 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       btnLoop.classList.remove("active");
     }
-  })
+  });
+
+  btnShuffle.addEventListener("click", () => {
+    isShuffle = !isShuffle;
+
+    if (isShuffle) {
+      btnShuffle.classList.add("active");
+    } else {
+      btnShuffle.classList.remove("active");
+    }
+  });
 
   playlistTracks.addEventListener("click", event => {
     const item = event.target.closest(".playlist-item");
@@ -188,10 +213,20 @@ document.addEventListener("DOMContentLoaded", () => {
   audioEngine.addEventListener("ended", nextSong);
 
   function nextSong() {
-    currentSongIndex ++;
+    if (isShuffle && songs.length > 2) {
+      let randomIndex;
 
-    if (currentSongIndex >= songs.length) {
-      currentSongIndex = 0;
+      do {
+        randomIndex = Math.floor(Math.random() * songs.length);
+      } while (randomIndex === currentSongIndex);
+
+      currentSongIndex = randomIndex;
+    } else {
+      currentSongIndex ++;
+
+      if (currentSongIndex >= songs.length) {
+        currentSongIndex = 0;
+      }
     }
 
     loadSong(currentSongIndex);
