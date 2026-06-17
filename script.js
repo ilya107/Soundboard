@@ -80,6 +80,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  songSearch.addEventListener("input", () => {
+    searchQuery = songSearch.value.trim();
+    renderPlaylist();
+  })
+
 
   function loadSong(index) {
     const song = songs[index];
