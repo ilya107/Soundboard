@@ -28,19 +28,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const songs = [
     {
       id: "1",
-      title: "Lost in the City",
-      artist: "Neon Drive",
-      src: "assets/music/lost-in-the-city.mp3",
-      cover: "assets/covers/neon-drive.png",
-      duration: "03:45",
+      title: "Classic Party",
+      artist: "Lyrium-2025",
+      src: "assets/music/song1.mp3",
+      cover: "assets/covers/cover1.jpg",
+      duration: "01:35",
     },
     {
       id: "3",
-      title: "Retro Wave",
-      artist: "Cyber Heart",
-      src: "assets/music/retro-wave.mp3",
-      cover: "assets/covers/cyber-heart.png",
-      duration: "02:58"
+      title: "KI - Instrumental (Classic)",
+      artist: "Black_Rose_Rabbit",
+      src: "assets/music/song2.mp3",
+      cover: "assets/covers/cover2.jpg",
+      duration: "02:34"
     }
   ];
 
@@ -81,9 +81,25 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   songSearch.addEventListener("input", () => {
-    searchQuery = songSearch.value.trim();
+    searchQuery = songSearch.value.trim().toLowerCase();
     renderPlaylist();
-  })
+  });
+
+  btnPlayPause.addEventListener("click", togglePlay);
+
+  playlistTracks.addEventListener("click", event => {
+    const item = event.target.closest(".playlist-item");
+    if (!item) return;
+
+    const clickedIndex = parseInt(item.dataset.index, 10);
+
+    currentSongIndex = clickedIndex;
+
+    loadSong(currentSongIndex);
+
+    isPlaying = false;
+    togglePlay();
+  });
 
 
   function loadSong(index) {
@@ -106,6 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
     })
 
     const activePlaylistItem = document.querySelector(`.playlist-item[data-id="${song.id}"]`);
+    if (activePlaylistItem);
     activePlaylistItem.classList.add("active");
   }
 
@@ -139,6 +156,18 @@ document.addEventListener("DOMContentLoaded", () => {
     if (currentSong) {
       const activeItem = document.querySelector(`.playlist-item[data-id="${currentSong.id}"]`);
       if (activeItem) activeItem.classList.add("active");
+    }
+  }
+
+  function togglePlay() {
+    if (isPlaying) {
+      audioEngine.pause();
+      btnPlayPause.textContent = "⏯";
+      isPlaying = false;
+    } else {
+      audioEngine.play().catch(err => console.log("Playback interrupted:", err));
+      btnPlayPause.textContent = "⏸";
+      isPlaying = true;
     }
   }
 
